@@ -62,6 +62,21 @@
             margin: 0;
             font-size: small;
         }
+
+        #start-diagnostics {
+            background-color: #4CAF50; /* Зеленый цвет фона */
+    color: white; /* Белый текст */
+    padding: 10px 24px; /* Паддинг вокруг текста */
+    border: none; /* Убираем границу */
+    border-radius: 5px; /* Скругляем углы */
+    cursor: pointer; /* Курсор в виде указателя */
+    transition: background-color 0.3s; /* Плавное изменение цвета при наведении */
+        }
+
+        #start-diagnostics:hover {
+    background-color: #45a049; /* Темно-зеленый цвет при наведении */
+}
+
     </style>
 </head>
 <body>
@@ -81,10 +96,12 @@
             <section id="diagnostics">
                 <h2>Диагностика ФВД</h2>
                 <p>Информация о диагностике функции внешнего дыхания...</p>
+                <button id="start-diagnostics">Начать диагностику</button>
             </section>
             <section id="analysis">
                 <h2>Анализы ФВД</h2>
-                <p>Детали анализов функции внешнего дыхания...</p>
+                <p>Информация о диагностике функции внешнего дыхания...</p>
+                <button id="start-diagnostics">Посмотреть анализы</button>
             </section>
             <section id="patient">
                 <h2>Пациент</h2>
