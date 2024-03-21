@@ -20,11 +20,14 @@
             justify-content: space-between;
         }
 
-        header, footer {
-            background-color: #b3e0e9; /* Голубой */
-            color: #005f6b; /* Темно-голубой текст */
+        header {
+            background: linear-gradient(135deg, #007bff, #004f6b); /* Градиент для шапки */
+            color: #ffffff; /* Белый текст */
             text-align: center;
-            padding: 20px;
+            padding: 40px 20px; /* Увеличенный отступ */
+            font-size: 28px; /* Увеличенный размер шрифта */
+            font-weight: bold; /* Жирный текст */
+            margin-bottom: 30px; /* Отступ от шапки до контента */
         }
 
         nav ul {
@@ -32,17 +35,24 @@
             display: flex;
             justify-content: center;
             padding: 0;
-            margin: 0;
-        }
-
-        nav ul li {
-            margin: 0 10px;
+            margin: 20px 0; /* Отступ сверху и снизу */
         }
 
         nav ul li a {
             text-decoration: none;
-            color: #007bff; /* Синий для ссылок */
-            font-weight: bold;
+            color: #ffffff;
+            background-color: #009688;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+            margin: 5px;
+        }
+
+        nav ul li a:hover, nav ul li a:focus {
+            background-color: #007bff;
+            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
         }
 
         main {
@@ -52,10 +62,17 @@
 
         section {
             margin: 20px 0;
-            background-color: #ffffff; /* Белый фон для секций */
+            background-color: #ffffff;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Легкая тень */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            background-color: #b3e0e9;
+            color: #005f6b;
+            text-align: center;
+            padding: 20px;
         }
 
         footer p {
@@ -63,26 +80,44 @@
             font-size: small;
         }
 
-        #start-diagnostics {
-            background-color: #4CAF50; /* Зеленый цвет фона */
-    color: white; /* Белый текст */
-    padding: 10px 24px; /* Паддинг вокруг текста */
-    border: none; /* Убираем границу */
-    border-radius: 5px; /* Скругляем углы */
-    cursor: pointer; /* Курсор в виде указателя */
-    transition: background-color 0.3s; /* Плавное изменение цвета при наведении */
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
 
-        #start-diagnostics:hover {
-    background-color: #45a049; /* Темно-зеленый цвет при наведении */
-}
+        .button:hover {
+            background-color: #45a049;
+        }
 
+        .loading-animation, .diagnostics-message {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        @keyframes loading {
+            0% { background-position: 0 0; }
+            100% { background-position: 100% 0; }
+        }
+
+        .loading-animation {
+            width: 100%;
+            height: 20px;
+            background: linear-gradient(to right, #4caf50 30%, #e6f7ff 50%, #4caf50 70%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite linear;
+        }
     </style>
 </head>
 <body>
     <div class="wrapper">
         <header>
-            <h1>Личный кабинет</h1>
+            <h1>Личный кабинет пользователя</h1>
         </header>
         <nav>
             <ul>
@@ -96,20 +131,24 @@
             <section id="diagnostics">
                 <h2>Диагностика ФВД</h2>
                 <p>Информация о диагностике функции внешнего дыхания...</p>
-                <button id="start-diagnostics">Начать диагностику</button>
+                <button id="start-diagnostics" class="button">Начать диагностику</button>
+                <div class="loading-animation"></div>
+                <div class="diagnostics-message"></div>
             </section>
             <section id="analysis">
                 <h2>Анализы ФВД</h2>
-                <p>Информация о диагностике функции внешнего дыхания...</p>
-                <button id="start-diagnostics">Посмотреть анализы</button>
+                <p>Детали анализов функции внешнего дыхания...</p>
+                <button class="button">Посмотреть анализы</button>
             </section>
             <section id="patient">
                 <h2>Пациент</h2>
                 <p>Общая информация о пациенте...</p>
+                <button class="button">Подробнее о пациенте</button>
             </section>
             <section id="patient-card">
                 <h2>Карточка пациента</h2>
                 <p>Детальная информация и история болезни пациента...</p>
+                <button class="button">Открыть карточку</button>
             </section>
         </main>
         <footer>
@@ -117,14 +156,28 @@
         </footer>
     </div>
     <script>
-        // Пример скрипта для интерактивности (можно дополнить или изменить)
-        document.querySelectorAll('nav ul li a').forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                const sectionId = this.getAttribute('href').substring(1);
-                document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
-            });
+        document.getElementById('start-diagnostics').addEventListener('click', function() {
+            var loadingAnimation = document.querySelector('.loading-animation');
+            var message = document.querySelector('.diagnostics-message');
+            
+            // Показываем анимацию загрузки
+            this.style.display = 'none'; // Скрываем кнопку
+            loadingAnimation.style.display = 'block';
+
+            // Симуляция процесса диагностики
+            setTimeout(function() {
+                loadingAnimation.style.display = 'none'; // Прячем анимацию загрузки
+                message.style.display = 'block'; // Показываем сообщение
+                message.innerHTML = 'Диагностика завершена. Анализы сохранены.';
+
+                // После некоторого времени сбрасываем состояние для возможности повторного запуска
+                setTimeout(function() {
+                    message.style.display = 'none';
+                    document.getElementById('start-diagnostics').style.display = 'inline-block';
+                }, 3000); // Время отображения сообщения
+            }, 3000); // Длительность "диагностики"
         });
     </script>
 </body>
 </html>
+
