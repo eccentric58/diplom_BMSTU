@@ -138,7 +138,21 @@
             <section id="analysis">
                 <h2>Анализы ФВД</h2>
                 <p>Детали анализов функции внешнего дыхания...</p>
-                <button class="button">Посмотреть анализы</button>
+                <button onclick="getAnalysis()" class="button">Посмотреть анализы</button>
+
+                <table>
+                    <caption>table</caption>
+                    <tr>
+                        <th>test</th>
+                        <th>test</th>
+                        <th>test</th>
+                    </tr>
+                    <tr>
+                        <td>dsfsdf</td>
+                        <td>dsfsdf</td>
+                        <td>dsfsdf</td>
+                    </tr>
+                </table>
             </section>
             <section id="patient">
                 <h2>Пациент</h2>
@@ -152,7 +166,7 @@
             </section>
         </main>
         <footer>
-            <p>Разработал "Игорь Жосан"</p>
+            <p>Разработал Игорь Жосан</p>
         </footer>
     </div>
     <script>
@@ -177,6 +191,36 @@
                 }, 3000); // Время отображения сообщения
             }, 3000); // Длительность "диагностики"
         });
+
+        function getAnalysis() {
+           // WARNING: For GET requests, body is set to null by browsers.
+
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener("readystatechange", function() {
+            if(this.readyState === 4) {
+                console.log(this.responseText);
+                createTableAnalysis(null);
+            }
+            });
+
+            xhr.open("GET", "http://localhost:8080/getInfoAboutPatient?patientId=1");
+
+            xhr.send();
+
+            
+        };
+        function createTableAnalysis(obj) {
+           const table = document.createElement("table")
+            document.getElementById("analysis").appendChild(table)
+            const head = document.createElement("caption")
+            table.appendChild(head)
+            const text = document.createTextNode("table")
+            head.appendChild(text)
+        
+        }
+
     </script>
 </body>
 </html>

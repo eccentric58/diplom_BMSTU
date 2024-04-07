@@ -1,7 +1,7 @@
-package com.example.medicine.fwd;
+package com.example.medicine.fwd.service;
 
 import com.example.medicine.fwd.dto.AnalysisDto;
-import com.example.medicine.fwd.dto.Patient;
+import com.example.medicine.fwd.model.Patient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,6 +24,4 @@ public class LatestAnalysController {
         Patient patient = new Patient("Igor", 21, "M", "12343");
         return patient;
     }
-
-
 }
