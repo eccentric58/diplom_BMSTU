@@ -4,115 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Личный кабинет</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #e6f7ff; /* Светло-голубой фон */
-            color: #005f6b; /* Темно-голубой текст */
-        }
-
-        .wrapper {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        header {
-            background: linear-gradient(135deg, #007bff, #004f6b); /* Градиент для шапки */
-            color: #ffffff; /* Белый текст */
-            text-align: center;
-            padding: 40px 20px; /* Увеличенный отступ */
-            font-size: 28px; /* Увеличенный размер шрифта */
-            font-weight: bold; /* Жирный текст */
-            margin-bottom: 30px; /* Отступ от шапки до контента */
-        }
-
-        nav ul {
-            list-style-type: none;
-            display: flex;
-            justify-content: center;
-            padding: 0;
-            margin: 20px 0; /* Отступ сверху и снизу */
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            color: #ffffff;
-            background-color: #009688;
-            padding: 10px 15px;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-            margin: 5px;
-        }
-
-        nav ul li a:hover, nav ul li a:focus {
-            background-color: #007bff;
-            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.3);
-            transform: translateY(-2px);
-        }
-
-        main {
-            padding: 20px;
-            flex: 1;
-        }
-
-        section {
-            margin: 20px 0;
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        footer {
-            background-color: #b3e0e9;
-            color: #005f6b;
-            text-align: center;
-            padding: 20px;
-        }
-
-        footer p {
-            margin: 0;
-            font-size: small;
-        }
-
-        .button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 24px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .button:hover {
-            background-color: #45a049;
-        }
-
-        .loading-animation, .diagnostics-message {
-            display: none;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        @keyframes loading {
-            0% { background-position: 0 0; }
-            100% { background-position: 100% 0; }
-        }
-
-        .loading-animation {
-            width: 100%;
-            height: 20px;
-            background: linear-gradient(to right, #4caf50 30%, #e6f7ff 50%, #4caf50 70%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite linear;
-        }
-    </style>
+    <link rel="stylesheet" href="main web-site.css">
 </head>
 <body>
     <div class="wrapper">
@@ -138,26 +30,12 @@
             <section id="analysis">
                 <h2>Анализы ФВД</h2>
                 <p>Детали анализов функции внешнего дыхания...</p>
-                <button onclick="getAnalysis()" class="button">Посмотреть анализы</button>
-
-                <table>
-                    <caption>table</caption>
-                    <tr>
-                        <th>test</th>
-                        <th>test</th>
-                        <th>test</th>
-                    </tr>
-                    <tr>
-                        <td>dsfsdf</td>
-                        <td>dsfsdf</td>
-                        <td>dsfsdf</td>
-                    </tr>
-                </table>
+                <button class="button" id="view-analysis">Посмотреть анализы</button>
             </section>
             <section id="patient">
                 <h2>Пациент</h2>
                 <p>Общая информация о пациенте...</p>
-                <button class="button">Подробнее о пациенте</button>
+                <button class="button" id="view-patient">Подробнее о пациенте</button>
             </section>
             <section id="patient-card">
                 <h2>Карточка пациента</h2>
@@ -169,59 +47,6 @@
             <p>Разработал Игорь Жосан</p>
         </footer>
     </div>
-    <script>
-        document.getElementById('start-diagnostics').addEventListener('click', function() {
-            var loadingAnimation = document.querySelector('.loading-animation');
-            var message = document.querySelector('.diagnostics-message');
-            
-            // Показываем анимацию загрузки
-            this.style.display = 'none'; // Скрываем кнопку
-            loadingAnimation.style.display = 'block';
-
-            // Симуляция процесса диагностики
-            setTimeout(function() {
-                loadingAnimation.style.display = 'none'; // Прячем анимацию загрузки
-                message.style.display = 'block'; // Показываем сообщение
-                message.innerHTML = 'Диагностика завершена. Анализы сохранены.';
-
-                // После некоторого времени сбрасываем состояние для возможности повторного запуска
-                setTimeout(function() {
-                    message.style.display = 'none';
-                    document.getElementById('start-diagnostics').style.display = 'inline-block';
-                }, 3000); // Время отображения сообщения
-            }, 3000); // Длительность "диагностики"
-        });
-
-        function getAnalysis() {
-           // WARNING: For GET requests, body is set to null by browsers.
-
-            var xhr = new XMLHttpRequest();
-            xhr.withCredentials = true;
-
-            xhr.addEventListener("readystatechange", function() {
-            if(this.readyState === 4) {
-                console.log(this.responseText);
-                createTableAnalysis(null);
-            }
-            });
-
-            xhr.open("GET", "http://localhost:8080/getInfoAboutPatient?patientId=1");
-
-            xhr.send();
-
-            
-        };
-        function createTableAnalysis(obj) {
-           const table = document.createElement("table")
-            document.getElementById("analysis").appendChild(table)
-            const head = document.createElement("caption")
-            table.appendChild(head)
-            const text = document.createTextNode("table")
-            head.appendChild(text)
-        
-        }
-
-    </script>
+    <script src="script main web-site.js"></script>
 </body>
 </html>
-
